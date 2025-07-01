@@ -1,3 +1,5 @@
+//flowchart LR fix
+
 painting:EXAMPLE-0001	isa	E22 Man-Made Object	object|type
 painting:EXAMPLE-0001	rdfs:comment	"A painted altarpiece, associated with religious practice. Originally created for a specific location."@en	|note
 painting:EXAMPLE-0001	P108 was produced by	production:EXAMPLE-0001	|event
