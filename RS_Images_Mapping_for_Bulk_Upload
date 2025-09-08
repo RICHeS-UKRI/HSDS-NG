@@ -1,0 +1,128 @@
+
+# PREFIXES USED ACROSS RS
+@prefix fedsail: <http://www.openrdf.org/config/sail/federation#> .
+@prefix crmtex: <http://www.cidoc-crm.org/extensions/crmtex/> .
+@prefix crmarchaeo: <http://www.cidoc-crm.org/extensions/crmarchaeo/> .
+@prefix Help: <http://help.researchspace.org/resource/> .
+@prefix bds: <http://www.bigdata.com/rdf/search#> .
+@prefix assets: <http://www.researchspace.org/resource/assets/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix crmba: <http://www.cidoc-crm.org/extensions/crmba/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix crmgeo: <http://www.cidoc-crm.org/extensions/crmgeo/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix User: <http://www.researchspace.org/resource/user/> .
+@prefix crmsci: <http://www.cidoc-crm.org/extensions/crmsci/> .
+@prefix forms: <http://www.researchspace.org/resource/system/forms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rshelp: <http://researchspace.org/help/> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix Platform: <http://www.researchspace.org/resource/system/> .
+@prefix crminfluence: <http://www.cidoc-crm.org/extensions/influence/> .
+@prefix lrmoo: <http://iflastandards.info/ns/lrm/lrmoo/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rso: <http://www.researchspace.org/ontology/> .
+@prefix Admin: <http://www.researchspace.org/resource/admin/> .
+@prefix ontodia: <http://ontodia.org/schema/v1#> .
+@prefix frbroo: <http://iflastandards.info/ns/fr/frbr/frbroo/> .
+@prefix crminf: <http://www.cidoc-crm.org/extensions/crminf/> .
+@prefix rsp: <http://www.researchspace.org/resource/> .
+@prefix crmdig: <http://www.cidoc-crm.org/extensions/crmdig/> .
+
+# Select data about an uploaded image and associated file
+construct {
+  <http://www.researchspace.org/resource/image/2246e513-7efc-4e01-93f5-bea3e4bd29d5> ?p ?o . 
+    ?o ?p2 ?o2 .
+}
+where {
+    <http://www.researchspace.org/resource/image/2246e513-7efc-4e01-93f5-bea3e4bd29d5> ?p ?o . 
+    ?o ?p2 ?o2 .
+}
+
+# Mandatory statements required for the Digital Image to appear correctly in the system 
+# Note, statements can be placed in any named graph or it goes into null graph by default
+
+<http://www.researchspace.org/resource/image/2246e513-7efc-4e01-93f5-bea3e4bd29d5>
+  a rso:EX_Digital_Image;
+  crmdig:L60i_is_documented_by <http://www.researchspace.org/resource/image/2246e513-7efc-4e01-93f5-bea3e4bd29d5/digitization_process>;
+  crm:P1_is_identified_by <http://www.researchspace.org/resource/image/2246e513-7efc-4e01-93f5-bea3e4bd29d5/primary_appellation> .
+
+<http://www.researchspace.org/resource/image/2246e513-7efc-4e01-93f5-bea3e4bd29d5/digitization_process>
+  a crmdig:D2_Digitization_Process;
+  crmdig:L11_had_output <http://www.researchspace.org/resource/EX_File/6117476045897198875_cro.png> .
+
+<http://www.researchspace.org/resource/image/2246e513-7efc-4e01-93f5-bea3e4bd29d5/primary_appellation>
+  a crm:E41_Appellation;
+  crm:P2_has_type <http://www.researchspace.org/resource/system/vocab/resource_type/primary_appellation>;
+  crm:P190_has_symbolic_content "N-0681-00-000046" .
+
+
+# Select all statements about a file resource
+construct  {
+ ?s ?p ?o . 
+}
+where {
+  graph <http://www.researchspace.org/resource/EX_File/6117476045897198875_cro.png/context> {
+    ?s ?p ?o . 
+  }
+}
+
+# Statements where prefixes specified above
+# Note, statements have to be placed in a graph that follows the convention below i.e. uri+"/context"
+<http://www.researchspace.org/resource/EX_File/6117476045897198875_cro.png/context> {
+    Platform:fileContainer <http://www.w3.org/ns/ldp#contains> <http://www.researchspace.org/resource/EX_File/6117476045897198875_cro.png> .
+
+    <http://www.researchspace.org/resource/EX_File/6117476045897198875_cro.png> a <http://www.w3.org/ns/ldp#Resource>,
+        prov:Entity, rso:EX_File;
+    prov:generatedAtTime "2025-06-24T15:00:44.520Z"^^xsd:dateTime;
+    prov:wasAttributedTo User:ed.burnett%40nationalgallery.org.uk;
+    rso:PX_has_file_name "6117476045897198875_cro.png";
+    rso:PX_has_media_type "image/png" .
+}
+
+
+# TEMPLATE FOR SCRIPTING DERIVED FROM ABOVE
+# Define: imageURIPrefix = http://reynolds.nationalgallery.org.uk/resource/image/
+# Define: fileURIPrefix = http://www.researchspace.org/resource/EX_File/
+## For several images all of this can be specified in one named graph
+imageURIPrefix:UUID
+  a rso:EX_Digital_Image;
+  crmdig:L60i_is_documented_by imageURIPrefix:UUID/digitization_process;
+  crm:P1_is_identified_by imageURIPrefix:UUID/primary_appellation> .
+
+imageURIPrefix:UUID/digitization_process
+  a crmdig:D2_Digitization_Process;
+  crmdig:L11_had_output fileURIPrefix:filenamewithextension .
+
+imageURIPrefix:UUID/primary_appellation
+  a crm:E41_Appellation;
+  crm:P2_has_type <http://www.researchspace.org/resource/system/vocab/resource_type/primary_appellation>;
+  crm:P190_has_symbolic_content "actual image title" .
+
+## The following can be placed in a specific named graph post upload or correct named graph and trig file is created now
+Platform:fileContainer <http://www.w3.org/ns/ldp#contains> fileURIPrefix:filenamewithextension .
+
+    fileURIPrefix:filenamewithextension a <http://www.w3.org/ns/ldp#Resource>,
+        prov:Entity, rso:EX_File;
+    prov:generatedAtTime "2025-06-24T15:00:44.520Z"^^xsd:dateTime;
+    prov:wasAttributedTo User:ed.burnett%40nationalgallery.org.uk;
+    rso:PX_has_file_name "filenamewithextension";
+    rso:PX_has_media_type "correct media type" .
+
+
+# Map file extensions to MIME types
+MEDIA_TYPES = {
+    'pdf': 'application/pdf',
+    'doc': 'application/msword',
+    'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'jpg': 'image/jpeg',
+    'jpeg': 'image/jpeg',
+    'png': 'image/png',
+    'txt': 'text/plain',
+    'csv': 'text/csv',
+    'json': 'application/json',
+    # add other mappings as needed
+}
+DEFAULT_MEDIA_TYPE = 'application/octet-stream'
