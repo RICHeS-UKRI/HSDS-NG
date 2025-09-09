@@ -1,1 +1,17 @@
+NOTE FROM DIANA
+Let's start with a query that can provide you with a list of Knowledge Patterns (KPs) that use reification in some way.
+
+select * {
+  ?kp a <http://www.researchspace.org/resource/system/fields/Field> .
+  ?kp <http://www.researchspace.org/resource/system/fields/selectPattern> ?selectPattern .
+  ?kp <http://www.researchspace.org/resource/system/fields/insertPattern> ?insertPattern .
+  ?selectPattern <http://spinrdf.org/sp#text> ?selecttext .
+  ?insertPattern <http://spinrdf.org/sp#text> ?inserttext .
+  FILTER (CONTAINS(STR(?selecttext),"crm:PC"))
+ # FILTER (CONTAINS(STR(?inserttext),"crm:PC"))
+}
+
+What this query does is it looks for KPs that contain crm:PC... properties. From the long list of results, let's consider for example: http://www.researchspace.org/pattern/system/title/has_title_range and http://www.researchspace.org/pattern/system/human-made_thing/PC102_has_title These two KPs work together to help define not just the title 
+but qualify which title is it. So across the list of KPs you got from the earlier search there will always be a pair of KPs working together 
+to qualify a relationship where it is needed. The data created by the two KPs in this case is what any reification requires. 
 
