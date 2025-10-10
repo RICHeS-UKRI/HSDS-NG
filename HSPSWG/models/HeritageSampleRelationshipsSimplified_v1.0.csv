@@ -1,0 +1,19 @@
+//flowchart TB			
+
+HeritageObject	bears feature	HeritageSampleSite	object|place
+HeritageSampleSite	is_found_on	HeritageObject	
+
+HeritageSample	was_produced_by	SamplingEvent	object|event
+SamplingEvent	has_produced	HeritageSample	
+
+HeritageSampleSite	was_sampling_location_of	SamplingEvent	
+
+HeritageSample	is former or current part of	HeritageObject	
+HeritageObject	has former or current part	HeritageSample	
+
+SamplingEvent	has_found_object	HeritageSampleSite
+
+HeritageSample	has_current_permanent_location	SampleStorage	|place
+
+Modification Event	has modified	HeritageSample	event|
+HeritageSample	was modified by	Modification Event	
