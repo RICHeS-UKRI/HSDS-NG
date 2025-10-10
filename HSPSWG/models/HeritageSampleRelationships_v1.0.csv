@@ -1,5 +1,9 @@
 //flowchart TB				
-				
+
+//subgraph
+Live Model	has link	Heritage Sample Relationships\nModel V0.1|https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HSDS-NG/refs/heads/main/HSPSWG/models/HeritageSampleRelationships_v1.0.csv	name-fs64|url-fs64
+//end sg2
+
 //subgraph Diagram Key				
 Dimensions	tooltip	Dimensions such as Width, Height, Weight, Size, etc.	dims|	
 Urls, Links and Identifiers	tooltip	Used for resolvable and potential resolvable IDs and web links.	url|	
