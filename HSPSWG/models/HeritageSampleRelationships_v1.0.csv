@@ -1,0 +1,111 @@
+//flowchart TB				
+				
+//subgraph Diagram Key				
+Dimensions	tooltip	Dimensions such as Width, Height, Weight, Size, etc.	dims|	
+Urls, Links and Identifiers	tooltip	Used for resolvable and potential resolvable IDs and web links.	url|	
+Names	tooltip	Used for simple names and labels	name|	
+Types	tooltip	Relates to terms defined by controlled lists, used to describe the type of a given thing.	type|	
+Notes	tooltip	Used to indicate notes, comments, descriptions, etc.	note|	
+Places	tooltip	Places, locations, sites, basically any absolute or relative locations.	place|	
+Time periods	tooltip	Sample Site Selection Criteria	note|	
+Person, Group or Organisation	tooltip	Know as actors, basically any entity actually doing things.	actor|	
+Events	tooltip	All event types, sampling, creation, birth death, etc.	event|	
+Document	tooltip	A defined document, normally a specific file reference.	document|	
+//end sg2						
+							
+//subgraph Sample Source Information				
+HeritageObject	tooltip	For example Painting, Sculpture, Book, Building, Furniture etc.	object-fs32|	
+HeritageObject	is_identified_by	Unique System Label	|name	
+HeritageObject	has_preferred_identifier	Persistant Identifier#-1	|url	
+HeritageObject	is_identified_by	Custodian Identifier#-1	|url	
+HeritageObject	is_identified_by	Alternative Identifiers#-1	|url	
+HeritageObject	has_type	object type	|type	
+HeritageObject	has_title	Title	|name	
+HeritageObject	has_current_owner	Institution or Person	|actor	
+HeritageObject	forms_part_of	Collection (Curated Holding)	|object	
+HeritageObject	has_current_permanent_location	Institution or Place	|place	
+HeritageObject	consists_of	medium type	|type	
+HeritageObject	consists_of	support type	|type	
+HeritageObject	has_condition	condition state#-1	|type	
+HeritageObject	was_produced_by	Object Production Event	|event_bn	
+Object Production Event	carried_out_by	Group or Artist	|actor	
+Object Production Event	took_place_at	Place of Production	|place	
+Object Production Event	has_time-span	Production date	|period	
+HeritageObject	is_referred_to_by	Object Description	|note	
+//end sg2				
+				
+//subgraph Sample Site Information				
+HeritageSampleSite	tooltip	The point or position a sample was extracted from - often described as a position relative to a HeritageObject	place-fs32|	
+HeritageSampleSite	has_preferred_identifier	Persistant Identifier#-2	|url	
+HeritageSampleSite	is_identified_by	Unique System Label#-2	|name	
+HeritageSampleSite	has_type	site type	|type	
+HeritageSampleSite	is_referred_to_by	Sample Site Description	|note	
+HeritageSampleSite	has former or current location	Sample Site Coordinates	|place	
+HeritageSampleSite	is_referred_to_by	Sample Site Selection Criteria	|note	
+//end sg2				
+				
+//subgraph Sample Information				
+HeritageSample	has_preferred_identifier	Persistant Identifier (IGSN)	object-fs32|url	
+HeritageSample	is_identified_by	Unique System Label#-3	|name	
+HeritageSample	is_identified_by	Custodian Identifier#-3	|url	
+HeritageSample	is_identified_by	Alternative Identifiers#-3	|url	
+HeritageSample	preferred_label	Sample Name or Label	|name	
+HeritageSample	is_referred_to_by	Sample Description/Comment	|note	
+HeritageSample	has_type	sample type	|type	
+HeritageSample	has_type	sample keywords 	|type	
+Sample keywords	tooltip	(examples of class, style, technique, composition etc.)		
+HeritageSample	has_dimension	Sample size	|dims	
+HeritageSample	has_current_owner	Institution or Person#-3	|actor	
+HeritageSample	has_condition	condition state#-3	|type	
+//end sg2				
+				
+//subgraph Sampling Event				
+SamplingEvent	has_preferred_identifier	Persistant Identifier#-4	event-fs32|url	
+SamplingEvent	is_identified_by	Unique System Label#-4	|name	
+SamplingEvent	has_type	event type#-4	|type	
+SamplingEvent	carried_out_by	Person who took sample	|actor	
+SamplingEvent	has_time-span	Date Sample taken	|period	
+SamplingEvent	is_referred_to_by	Reason for sampling	|note	
+SamplingEvent	is_referred_to_by	Sampling Comment	|note	
+SamplingEvent	used_specific_technique	Sampling Method	|document	
+SamplingEvent	took_place_at	Institution or Place#-4	|place	
+//end sg2							
+				
+//subgraph Sample Modification Event				
+ModificationEvent	has_preferred_identifier	Persistant Identifier#-5	event-fs32|url	
+ModificationEvent	is_identified_by	Unique System Label#-5	|name	
+ModificationEvent	has_type	event type#-5	|type	
+ModificationEvent	carried_out_by	Person	|actor	
+ModificationEvent	has_time-span	Modification Date	|period	
+ModificationEvent	is_referred_to_by	Modification Comment	|note	
+ModificationEvent	used_specific_technique	Modification Method	|document	
+ModificationEvent	took_place_at	Institution or Place#-5	|place	
+//end sg2					
+				
+//subgraph Sample Storage Information				
+SampleStorage	has_preferred_identifier	Persistant Identifier#-6	place-fs32|url	
+SampleStorage	is_identified_by	Unique System Label#-6	|name	
+SampleStorage	has_type	storage type	|type	
+SampleStorage	has_condition	storage condition state	|type	
+SampleStorage	is_referred_to_by	Storage Comment	|note	
+SampleStorage	used_specific_technique	Storage Method	|document	
+SampleStorage	has_current_permanent_location	Storage Location	|place	
+//end sg2				
+				
+Sample Source Information	bears feature	Sample Site Information		
+Sample Site Information	is_found_on	Sample Source Information		
+				
+Sample Information	was_produced_by	Sampling Event		
+Sampling Event	has_produced	Sample Information		
+				
+Sample Site Information	was_sampling_location_of	Sampling Event		
+				
+Sample Information	is former or current part of	Sample Source Information		
+Sample Source Information	has former or current part	Sample Information		
+				
+Sampling Event	has_found_object	Sample Site Information		
+				
+Sample Information	has_current_permanent_location	Sample Storage Information		
+				
+Sample Modification Event	has modified	Sample Information		
+Sample Information	was modified by	Sample Modification Event		
